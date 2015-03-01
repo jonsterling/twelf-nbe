@@ -4,7 +4,7 @@ meaning : tm -> env -> sem -> type.
 - : meaning unit R 1.
 - : meaning ax R •.
 - : meaning (sg X A B) R (Σ A' B')
-     <- ({x} meaning B (R ; X ~> x) (B' x))
+     <- ({x} meaning B (R ; X ↦ x) (B' x))
      <- meaning A R A'.
 - : meaning (pair M N) R (M' , N')
      <- meaning N R N'
@@ -16,10 +16,10 @@ meaning : tm -> env -> sem -> type.
      <- meaning M R M'
      <- π₂ M' ⇒ M2.
 - : meaning (pi X A B) R (∏ A' B')
-     <- ({x} meaning B (R ; X ~> x) (B' x))
+     <- ({x} meaning B (R ; X ↦ x) (B' x))
      <- meaning A R A'.
 - : meaning (lam X E) R (λ E')
-     <- ({x} meaning E (R ; X ~> x) (E' x)).
+     <- ({x} meaning E (R ; X ↦ x) (E' x)).
 - : meaning (ap M N) R MN
      <- meaning N R N'
      <- meaning M R M'
