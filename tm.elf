@@ -1,0 +1,14 @@
+tm : type.
+
+unit : tm.
+ax : tm.
+
+sg : name -> tm -> tm -> tm.
+pair : tm -> tm -> tm.
+fst : tm -> tm.
+snd : tm -> tm.
+
+pi : name -> tm -> tm -> tm.
+lam : name -> tm -> tm.
+ap : tm -> tm -> tm.
+var : name -> tm.

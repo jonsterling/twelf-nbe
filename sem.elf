@@ -1,0 +1,39 @@
+sem : type.
+
+%block var-sem : block {x:sem}.
+
+<unit> : sem.
+<ax> : sem.
+
+<sg> : sem -> (sem -> sem) -> sem.
+<pair> : sem -> sem -> sem.
+<fst> : sem -> sem.
+<snd> : sem -> sem.
+
+<pi> : sem -> (sem -> sem) -> sem.
+<lam> : (sem -> sem) -> sem.
+<ap> : sem -> sem -> sem.
+<free> : name -> sem.
+
+=> : sem -> sem -> type. %infix right 9 =>.
+%mode => +M -N.
+
+=>/<unit> : <unit> => <unit>.
+=>/<ax> : <ax> => <ax>.
+
+=>/<sg> : <sg> A B => <sg> A B.
+=>/<pair> : <pair> M N => <pair> M N.
+=>/<lam> : <lam> E => <lam> E.
+=>/<fst> : <fst> (<pair> M N) => M'
+          <- M => M'.
+=>/<snd> : <snd> (<pair> M N) => N'
+          <- M => N'.
+
+=>/<pi> : <pi> A B => <pi> A B.
+=>/<lam> : <lam> E => <lam> E.
+=>/<ap> : <ap> (<lam> E) M => O
+         <- E M => O.
+
+=>/<free> : <free> V => <free> V.
+
+%worlds (var-sem) (=> _ _).

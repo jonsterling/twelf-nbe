@@ -1,0 +1,11 @@
+nat : type.
+ze : nat.
+su : nat -> nat.
+
+nat-to-name : nat -> name -> type.
+%mode nat-to-name +N -V.
+nat-to-name/ze : nat-to-name ze "z".
+nat-to-name/su : nat-to-name (su N) ("s" ++ V)
+                  <- nat-to-name N V.
+%worlds () (nat-to-name _ _).
+%terminates N (nat-to-name N _).

@@ -1,0 +1,31 @@
+meaning : tm -> env -> sem -> type. 
+%mode meaning +M +R -E.
+
+- : meaning unit R <unit>.
+- : meaning ax R <ax>.
+- : meaning (sg X A B) R (<sg> A' B')
+     <- ({x} meaning B (R ; X ~> x) (B' x))
+     <- meaning A R A'.
+- : meaning (pair M N) R (<pair> M' N')
+     <- meaning N R N'
+     <- meaning M R M'.
+- : meaning (fst M) R M1
+     <- meaning M R M'
+     <- <fst> M' => M1.
+- : meaning (snd M) R M2
+     <- meaning M R M'
+     <- <snd> M' => M2.
+- : meaning (pi X A B) R (<pi> A' B')
+     <- ({x} meaning B (R ; X ~> x) (B' x))
+     <- meaning A R A'.
+- : meaning (lam X E) R (<lam> E')
+     <- ({x} meaning E (R ; X ~> x) (E' x)).
+- : meaning (ap M N) R MN
+     <- meaning N R N'
+     <- meaning M R M'
+     <- <ap> M' N' => MN.
+- : meaning (var V) R M
+     <- lookup R V M.
+
+%worlds (var-sem) (meaning _ _ _).
+%covers meaning +M +R -E.

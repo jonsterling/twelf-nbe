@@ -1,0 +1,41 @@
+reflect : sem -> sem -> sem -> type.
+%mode reflect +D1 +D2 -D3.
+
+reify : sem -> sem -> sem -> type.
+%mode reify +D1 +D2 -D3.
+
+- : reflect <unit> K <ax>.
+- : reflect (<sg> A B) K (<pair> M N)
+     <- reflect A (<snd> K) N
+     <- reflect A (<fst> K) M.
+- : reflect (<pi> A B) K (<lam> E)
+     <- ({x} reify A x (N x))
+     <- ({x} reflect (B x) (<ap> K (N x)) (E x)).
+
+- : reify <unit> D <ax>.
+- : reify (<sg> A B) D (<pair> M N)
+     <- <fst> D => D1
+     <- <snd> D => D2
+     <- reify A D1 M
+     <- reify (B M) D2 N.
+- : reify (<pi> A B) D (<lam> E)
+     <- ({x} reflect A x (RA x))
+     <- ({x} <ap> D (RA x) => (DRA x))
+     <- ({x} (reify (B (RA x)) (DRA x) (E x))).
+
+%worlds (var-sem) (reify _ _ _) (reflect _ _ _).
+
+reify-ty : sem -> sem -> type.
+%mode reify-ty +D1 -D2.
+
+- : reify-ty <unit> <unit>.
+- : reify-ty (<pi> A B) (<pi> A' B')
+     <- ({x} reflect A x (RA x))
+     <- ({x} reify-ty (B (RA x)) (B' x))
+     <- reify-ty A A'.
+- : reify-ty (<sg> A B) (<sg> A' B')
+     <- ({x} reflect A x (RA x))
+     <- ({x} reify-ty (B (RA x)) (B' x))
+     <- reify-ty A A'.
+
+%worlds (var-sem) (reify-ty _ _).

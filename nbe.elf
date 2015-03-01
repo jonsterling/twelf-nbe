@@ -1,0 +1,22 @@
+nbe : tm -> tm -> tm -> type.
+%mode nbe +M +N -N'.
+
+- : nbe A M M'''
+     <- meaning M <> M'
+     <- meaning A <> A'
+     <- reify A' M' M''
+     <- quote ze M'' M'''.
+
+%worlds () (nbe _ _ _).
+%covers nbe +M +N -N'.
+
+nbe-ty : tm -> tm -> type.
+%mode nbe-ty +A -A'.
+
+- : nbe-ty A A'''
+     <- meaning A <> A'
+     <- reify-ty A' A''
+     <- quote ze A'' A'''.
+
+%worlds () (nbe-ty _ _).
+%covers nbe-ty +A -A'.
