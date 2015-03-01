@@ -1,30 +1,30 @@
 quote : nat -> sem -> tm -> type.
 %mode quote +N +D -M.
 
-- : quote G <unit> unit.
-- : quote G <ax> ax.
-- : quote G (<sg> A B) (sg X A' B')
+- : quote G 1 unit.
+- : quote G • ax.
+- : quote G (Σ A B) (sg X A' B')
      <- nat-to-name G X
-     <- quote (su G) (B (<free> X)) B'
+     <- quote (su G) (B (` X)) B'
      <- quote G A A'.
-- : quote G (<pair> M N) (pair M' N')
+- : quote G (M , N) (pair M' N')
      <- quote G M M'
      <- quote G N N'.
-- : quote G (<fst> M) (fst M')
+- : quote G (π₁ M) (fst M')
      <- quote G M M'.
-- : quote G (<snd> M) (snd M')
+- : quote G (π₂ M) (snd M')
      <- quote G M M'.
-- : quote G (<pi> A B) (pi X A' B')
+- : quote G (∏ A B) (pi X A' B')
      <- nat-to-name G X
-     <- quote (su G) (B (<free> X)) B'
+     <- quote (su G) (B (` X)) B'
      <- quote G A A'.
-- : quote G (<lam> E) (lam X E')
+- : quote G (λ E) (lam X E')
      <- nat-to-name G X
-     <- quote (su G) (E (<free> X)) E'.
-- : quote G (<ap> M N) (ap M' N')
+     <- quote (su G) (E (` X)) E'.
+- : quote G (M $ N) (ap M' N')
      <- quote G N N'
      <- quote G M M'.
-- : quote G (<free> X) (var X).
+- : quote G (` X) (var X).
 
 %worlds () (quote _ _ _).
 %covers quote +G +D -M.

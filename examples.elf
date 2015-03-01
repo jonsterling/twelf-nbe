@@ -1,7 +1,7 @@
-%solve - : meaning (ap (lam "x" (lam "z" (var "x"))) ax) <> Z.
+%solve - : meaning (ap (lam "x" (lam "z" (var "x"))) ax) · Z.
 
 %define welp = Z
-%solve - : quote ze (<sg> <unit> ([x] (<sg> <unit> ([y] x)))) Z.
+%solve - : quote ze (Σ 1 ([x] (Σ 1 ([y] x)))) Z.
 
 %define result = Z
 %solve test : nbe (pi "x" unit unit) (lam "x" (var "x")) Z.

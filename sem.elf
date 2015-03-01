@@ -2,38 +2,38 @@ sem : type.
 
 %block var-sem : block {x:sem}.
 
-<unit> : sem.
-<ax> : sem.
+1 : sem.
+• : sem.
 
-<sg> : sem -> (sem -> sem) -> sem.
-<pair> : sem -> sem -> sem.
-<fst> : sem -> sem.
-<snd> : sem -> sem.
+Σ : sem -> (sem -> sem) -> sem.
+, : sem -> sem -> sem. %infix right 11 ,.
+π₁ : sem -> sem. %prefix 10 π₁.
+π₂ : sem -> sem. %prefix 10 π₂.
 
-<pi> : sem -> (sem -> sem) -> sem.
-<lam> : (sem -> sem) -> sem.
-<ap> : sem -> sem -> sem.
-<free> : name -> sem.
+∏ : sem -> (sem -> sem) -> sem.
+λ : (sem -> sem) -> sem.
+$ : sem -> sem -> sem. %infix left 10 $.
+` : name -> sem. %prefix 10 `.
 
-=> : sem -> sem -> type. %infix right 9 =>.
-%mode => +M -N.
+⇒ : sem -> sem -> type. %infix right 9 ⇒.
+%mode ⇒ +M -N.
 
-=>/<unit> : <unit> => <unit>.
-=>/<ax> : <ax> => <ax>.
+- : 1 ⇒ 1.
+- : • ⇒ •.
 
-=>/<sg> : <sg> A B => <sg> A B.
-=>/<pair> : <pair> M N => <pair> M N.
-=>/<lam> : <lam> E => <lam> E.
-=>/<fst> : <fst> (<pair> M N) => M'
-          <- M => M'.
-=>/<snd> : <snd> (<pair> M N) => N'
-          <- M => N'.
+- : Σ A B ⇒ Σ A B.
+- : M , N ⇒ M , N.
+- : π₁ (M , N) ⇒ M'
+     <- M ⇒ M'.
+- : π₂ (M , N) ⇒ N'
+     <- M ⇒ N'.
 
-=>/<pi> : <pi> A B => <pi> A B.
-=>/<lam> : <lam> E => <lam> E.
-=>/<ap> : <ap> (<lam> E) M => O
-         <- E M => O.
+- : ∏ A B ⇒ ∏ A B.
+- : λ E ⇒ λ E.
 
-=>/<free> : <free> V => <free> V.
+- : λ E $ M ⇒ O
+     <- E M ⇒ O.
 
-%worlds (var-sem) (=> _ _).
+- : ` V ⇒ ` V.
+
+%worlds (var-sem) (⇒ _ _).
