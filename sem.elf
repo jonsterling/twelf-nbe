@@ -10,7 +10,7 @@ sem : type.
 π₁ : sem -> sem. %prefix 10 π₁.
 π₂ : sem -> sem. %prefix 10 π₂.
 
-∏ : sem -> (sem -> sem) -> sem.
+Π : sem -> (sem -> sem) -> sem.
 λ : (sem -> sem) -> sem.
 $ : sem -> sem -> sem. %infix left 10 $.
 ` : name -> sem. %prefix 10 `.
@@ -25,14 +25,17 @@ $ : sem -> sem -> sem. %infix left 10 $.
 - : M , N ⇒ M , N.
 - : π₁ (M , N) ⇒ M'
      <- M ⇒ M'.
+- : π₁ R ⇒ π₁ R.
 - : π₂ (M , N) ⇒ N'
      <- M ⇒ N'.
+- : π₂ R ⇒ π₂ R.
 
-- : ∏ A B ⇒ ∏ A B.
+- : Π A B ⇒ Π A B.
 - : λ E ⇒ λ E.
 
 - : λ E $ M ⇒ O
      <- E M ⇒ O.
+- : M $ N ⇒ M $ N.
 
 - : ` V ⇒ ` V.
 

@@ -8,7 +8,7 @@ reify : sem -> sem -> sem -> type.
 - : reflect (Σ A B) K (M , N)
      <- reflect A (π₁ K) M
      <- reflect (B M) (π₂ K) N.
-- : reflect (∏ A B) K (λ E)
+- : reflect (Π A B) K (λ E)
      <- ({x} reify A x (N x))
      <- ({x} reflect (B x) (K $ N x) (E x)).
 
@@ -18,7 +18,7 @@ reify : sem -> sem -> sem -> type.
      <- π₁ D ⇒ D1
      <- reify A D1 M
      <- reify (B M) D2 N.
-- : reify (∏ A B) D (λ E)
+- : reify (Π A B) D (λ E)
      <- ({x} reflect A x (RA x))
      <- ({x} D $ (RA x) ⇒ (DRA x))
      <- ({x} (reify (B (RA x)) (DRA x) (E x))).
@@ -29,7 +29,7 @@ reify-ty : sem -> sem -> type.
 %mode reify-ty +D1 -D2.
 
 - : reify-ty 1 1.
-- : reify-ty (∏ A B) (∏ A' B')
+- : reify-ty (Π A B) (Π A' B')
      <- ({x} reflect A x (RA x))
      <- ({x} reify-ty (B (RA x)) (B' x))
      <- reify-ty A A'.

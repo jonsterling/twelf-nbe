@@ -1,31 +1,32 @@
-meaning : tm -> env -> sem -> type. 
-%mode meaning +M +R -E.
+meaning : tm -> sem -> type. 
+%mode meaning +M -E.
 
-- : meaning unit R 1.
-- : meaning ax R •.
-- : meaning (sg X A B) R (Σ A' B')
-     <- ({x} meaning B (R ; X ↦ x) (B' x))
-     <- meaning A R A'.
-- : meaning (pair M N) R (M' , N')
-     <- meaning N R N'
-     <- meaning M R M'.
-- : meaning (fst M) R M1
-     <- meaning M R M'
+%block meaning-var : block {x}{x'}{_ : meaning x x'}.
+
+- : meaning unit 1.
+- : meaning ax •.
+- : meaning (sg A B) (Σ A' B')
+     <- ({x}{x'} meaning x x' -> meaning (B x) (B' x'))
+     <- meaning A A'.
+- : meaning (pair M N) (M' , N')
+     <- meaning N N'
+     <- meaning M M'.
+- : meaning (fst / M) M1
+     <- meaning M M'
      <- π₁ M' ⇒ M1.
-- : meaning (snd M) R M2
-     <- meaning M R M'
+- : meaning (snd / M) M2
+     <- meaning M M'
      <- π₂ M' ⇒ M2.
-- : meaning (pi X A B) R (∏ A' B')
-     <- ({x} meaning B (R ; X ↦ x) (B' x))
-     <- meaning A R A'.
-- : meaning (lam X E) R (λ E')
-     <- ({x} meaning E (R ; X ↦ x) (E' x)).
-- : meaning (ap M N) R MN
-     <- meaning N R N'
-     <- meaning M R M'
+- : meaning (pi A B) (Π A' B')
+     <- ({x} {x'} meaning x x' -> meaning (B x) (B' x'))
+     <- meaning A A'.
+- : meaning (lam E) (λ E')
+     <- ({x} {x'} meaning x x' -> meaning (E x) (E' x')).
+- : meaning (ap N / M) MN
+     <- meaning N N'
+     <- meaning M M'
      <- M' $ N' ⇒ MN.
-- : meaning (var V) R M
-     <- lookup R V M.
+- : meaning (var X) (` X).
 
-%worlds (var-sem) (meaning _ _ _).
-%covers meaning +M +R -E.
+%worlds (meaning-var) (meaning _ _).
+%covers meaning +M -E.
