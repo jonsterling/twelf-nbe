@@ -8,13 +8,21 @@ use : op -> tm -> tm -> type.
 chk : tm -> tm -> type.
 %mode chk +M +A.
 
+hyp : tm -> tm -> type.
+%block hyp-var : some {A} block {x} {_ : hyp x A}.
+
+%mode hyp +R -A.
+%worlds (hyp-var) (hyp _ _).
+
 inf : tm -> tm -> type.
 %mode inf +R -A.
 
-hyp : tm -> tm -> type.
-%mode hyp +R -A.
+inf/hyp : inf R A
+           <- hyp R A.
+inf/use : inf (U / R) B
+           <- inf R A
+           <- use U R B.
 
-%block hyp-var : some {A} block {x} {_ : hyp x A}.
 
 ver/ax : ver ax unit.
 ver/pair : ver (pair M N) (sg A B)
@@ -29,17 +37,12 @@ use/fst : use fst R A
 use/snd : use snd R (B (fst / R))
            <- inf R (sg A B).
 
+%worlds (hyp-var) (inf _ _) (use _ _ _).
+
 chk/ver : chk M A
            <- nbe-ty A A'
            <- nbe A' M M'
            <- ver M' A'.
 chk/inf : chk R A
-           <- nbe-ty A A'
-           <- nbe A R R'
-           <- inf R' A'.
-
-inf/hyp : inf R A
-           <- hyp R A.
-inf/use : inf (U / R) B
-           <- inf R A
-           <- use U R B.
+           <- inf R A'
+           <- nbe-ty A A'.

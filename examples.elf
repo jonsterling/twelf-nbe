@@ -3,3 +3,8 @@
 
 %define result = Z
 %solve test : nbe (pi unit ([x] unit)) (lam [x] x) Z.
+
+%solve - : chk (fst / pair ax ax) unit.
+%solve test2 : chk
+                (lam [x] fst / x)
+                (pi (sg unit ([x] unit)) ([z] unit)).
