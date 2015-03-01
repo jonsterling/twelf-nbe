@@ -6,8 +6,8 @@ reify : sem -> sem -> sem -> type.
 
 - : reflect 1 K •.
 - : reflect (Σ A B) K (M , N)
-     <- reflect A (π₂ K) N
-     <- reflect A (π₁ K) M.
+     <- reflect A (π₁ K) M
+     <- reflect (B M) (π₂ K) N.
 - : reflect (∏ A B) K (λ E)
      <- ({x} reify A x (N x))
      <- ({x} reflect (B x) (K $ N x) (E x)).
