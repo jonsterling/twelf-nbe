@@ -13,7 +13,6 @@ sem : type.
 Π : sem -> (sem -> sem) -> sem.
 λ : (sem -> sem) -> sem.
 $ : sem -> sem -> sem. %infix left 10 $.
-` : name -> sem. %prefix 10 `.
 
 ⇒ : sem -> sem -> type. %infix right 9 ⇒.
 %mode ⇒ +M -N.
@@ -36,7 +35,5 @@ $ : sem -> sem -> sem. %infix left 10 $.
 - : λ E $ M ⇒ O
      <- E M ⇒ O.
 - : M $ N ⇒ M $ N.
-
-- : ` V ⇒ ` V.
 
 %worlds (var-sem) (⇒ _ _).

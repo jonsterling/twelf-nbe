@@ -26,7 +26,6 @@ meaning : tm -> sem -> type.
      <- meaning N N'
      <- meaning M M'
      <- M' $ N' ⇒ MN.
-- : meaning (var X) (` X).
 
 %worlds (meaning-var) (meaning _ _).
 %covers meaning +M -E.

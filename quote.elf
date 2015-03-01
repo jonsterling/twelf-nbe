@@ -23,7 +23,6 @@ quote : sem -> tm -> type.
 - : quote (M $ N) (ap N' / M')
      <- quote N N'
      <- quote M M'.
-- : quote (` X) (var X).
 
 %worlds (quote-var) (quote _ _).
 %total D (quote D _).

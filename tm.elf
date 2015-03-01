@@ -13,6 +13,4 @@ pi : tm -> (tm -> tm) -> tm.
 lam : (tm -> tm) -> tm.
 ap : tm -> op.
 
-var : name -> tm.
-
 / : op -> tm -> tm. %infix right 9 /.
