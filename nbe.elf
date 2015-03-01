@@ -1,22 +1,24 @@
-nbe : tm -> tm -> tm -> type.
-%mode nbe +M +N -N'.
+nbe : env -> tm -> tm -> tm -> type.
+%mode nbe +R +M +N -N'.
 
-- : nbe A M M'''
-     <- meaning M · M'
-     <- meaning A · A'
+- : nbe R A M M'''
+     <- meaning M R M'
+     <- meaning A R A'
      <- reify A' M' M''
-     <- quote ze M'' M'''.
+     <- length R L
+     <- quote L M'' M'''.
 
-%worlds () (nbe _ _ _).
-%covers nbe +M +N -N'.
+%worlds () (nbe _ _ _ _).
+%covers nbe +R +M +N -N'.
 
-nbe-ty : tm -> tm -> type.
-%mode nbe-ty +A -A'.
+nbe-ty : env -> tm -> tm -> type.
+%mode nbe-ty +R +A -A'.
 
-- : nbe-ty A A'''
-     <- meaning A · A'
+- : nbe-ty R A A'''
+     <- meaning A R A'
      <- reify-ty A' A''
-     <- quote ze A'' A'''.
+     <- length R L
+     <- quote L A'' A'''.
 
-%worlds () (nbe-ty _ _).
-%covers nbe-ty +A -A'.
+%worlds () (nbe-ty _ _ _).
+%covers nbe-ty +R +A -A'.
