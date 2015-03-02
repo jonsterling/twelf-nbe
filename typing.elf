@@ -23,7 +23,6 @@ inf/use : inf (U / R) B
            <- inf R A
            <- use U R B.
 
-
 ver/ax : ver ax unit.
 ver/pair : ver (pair M N) (sg A B)
             <- chk N (B M)
@@ -31,13 +30,13 @@ ver/pair : ver (pair M N) (sg A B)
 ver/lam : ver (lam E) (pi A B)
            <- {x} hyp x A -> chk (E x) (B x).
 
-
 use/fst : use fst R A
            <- inf R (sg A B).
 use/snd : use snd R (B (fst / R))
            <- inf R (sg A B).
-
-%worlds (hyp-var) (inf _ _) (use _ _ _).
+use/ap : use (ap N) R (B N)
+          <- inf R (pi A B)
+          <- chk N A.
 
 chk/ver : chk M A
            <- nbe-ty A A'
