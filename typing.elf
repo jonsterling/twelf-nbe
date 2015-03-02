@@ -19,7 +19,7 @@ inf : tm -> tm -> type.
 
 inf/hyp : inf R A
            <- hyp R A.
-inf/use : inf (U / R) B
+inf/use : inf (U -$ R) B
            <- inf R A
            <- use U R B.
 
@@ -32,7 +32,7 @@ ver/lam : ver (lam E) (pi A B)
 
 use/fst : use fst R A
            <- inf R (sg A B).
-use/snd : use snd R (B (fst / R))
+use/snd : use snd R (B (fst -$ R))
            <- inf R (sg A B).
 use/ap : use (ap N) R (B N)
           <- inf R (pi A B)

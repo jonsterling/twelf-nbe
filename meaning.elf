@@ -11,10 +11,10 @@ meaning : tm -> sem -> type.
 - : meaning (pair M N) (M' , N')
      <- meaning N N'
      <- meaning M M'.
-- : meaning (fst / M) M1
+- : meaning (fst -$ M) M1
      <- meaning M M'
      <- π₁ M' ⇒ M1.
-- : meaning (snd / M) M2
+- : meaning (snd -$ M) M2
      <- meaning M M'
      <- π₂ M' ⇒ M2.
 - : meaning (pi A B) (Π A' B')
@@ -22,7 +22,7 @@ meaning : tm -> sem -> type.
      <- meaning A A'.
 - : meaning (lam E) (λ E')
      <- ({x} {x'} meaning x x' -> meaning (E x) (E' x')).
-- : meaning (ap N / M) MN
+- : meaning (ap N -$ M) MN
      <- meaning N N'
      <- meaning M M'
      <- M' $ N' ⇒ MN.
