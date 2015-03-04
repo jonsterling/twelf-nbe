@@ -24,9 +24,12 @@ neu : canonicity.
 neutral : sem -> type.
 %mode neutral +M.
 
-neutral/π₁ : neutral (π₁ R).
-neutral/π₂ : neutral (π₂ R).
-neutral/$ : neutral (R $ M).
+neutral/π₁ : neutral (π₁ R)
+              <- neutral R.
+neutral/π₂ : neutral (π₂ R)
+              <- neutral R.
+neutral/$ : neutral (R $ M)
+             <- neutral R.
 
 ⇒/1 : 1 ⇒ 1.
 ⇒/• : • ⇒ •.
