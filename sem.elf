@@ -57,6 +57,3 @@ neutral/$ : neutral (R $ M)
 
 %block var-eval : block {x:sem}{_:x ⇒ x}{_:neutral x}.
 %worlds (var-eval) (neutral _) (⇒ _ _).
-
-%define result = Z
-%solve - : (λ [x] (λ [z] z) $ x) ⇒ Z.
