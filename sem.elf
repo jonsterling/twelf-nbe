@@ -17,23 +17,47 @@ $ : sem -> sem -> sem. %infix left 10 $.
 ⇒ : sem -> sem -> type. %infix right 9 ⇒.
 %mode ⇒ +M -N.
 
-- : 1 ⇒ 1.
-- : • ⇒ •.
+canonicity : type.
+can : canonicity.
+neu : canonicity.
 
-- : Σ A B ⇒ Σ A B.
-- : M , N ⇒ M , N.
-- : π₁ (M , N) ⇒ M'
-     <- M ⇒ M'.
-- : π₁ R ⇒ π₁ R.
-- : π₂ (M , N) ⇒ N'
-     <- M ⇒ N'.
-- : π₂ R ⇒ π₂ R.
+neutral : sem -> type.
+%mode neutral +M.
 
-- : Π A B ⇒ Π A B.
-- : λ E ⇒ λ E.
+neutral/π₁ : neutral (π₁ R).
+neutral/π₂ : neutral (π₂ R).
+neutral/$ : neutral (R $ M).
 
-- : λ E $ M ⇒ O
-     <- E M ⇒ O.
-- : M $ N ⇒ M $ N.
+⇒/1 : 1 ⇒ 1.
+⇒/• : • ⇒ •.
+⇒/Σ : Σ A B ⇒ Σ A B.
+⇒/, : M , N ⇒ M , N.
+⇒/π₁ : π₁ MN ⇒ M'
+        <- MN ⇒ (M , N)
+        <- M ⇒ M'.
+⇒/π₁/ne : π₁ R ⇒ π₁ R'
+           <- R ⇒ R'
+           <- neutral R'.
 
-%worlds (var-sem) (⇒ _ _).
+⇒/π₂ : π₂ MN ⇒ N'
+        <- MN ⇒ (M , N)
+        <- M ⇒ N'.
+⇒/π₂/ne : π₂ R ⇒ π₂ R'
+           <- R ⇒ R'
+           <- neutral R'.
+
+⇒/Π : Π A B ⇒ Π A B.
+⇒/λ : λ E ⇒ λ E.
+
+⇒/$ : M $ N ⇒ O
+       <- M ⇒ λ E
+       <- E N ⇒ O.
+⇒/$/ne : R $ N ⇒ R' $ N
+          <- R ⇒ R'
+          <- neutral R.
+
+%block var-eval : block {x:sem}{_:x ⇒ x}{_:neutral x}.
+%worlds (var-eval) (neutral _) (⇒ _ _).
+
+%define result = Z
+%solve - : (λ [x] (λ [z] z) $ x) ⇒ Z.

@@ -1,31 +1,31 @@
 meaning : tm -> sem -> type. 
 %mode meaning +M -E.
 
-%block meaning-var : block {x}{x'}{_ : meaning x x'}.
+%block meaning-var : block {x}{x'}{_ : x' ⇒ x'}{_ : neutral x'}{_ : meaning x x'}.
 
-- : meaning unit 1.
-- : meaning ax •.
-- : meaning (sg A B) (Σ A' B')
-     <- ({x}{x'} meaning x x' -> meaning (B x) (B' x'))
-     <- meaning A A'.
-- : meaning (pair M N) (M' , N')
-     <- meaning N N'
-     <- meaning M M'.
-- : meaning (fst -$ M) M1
-     <- meaning M M'
-     <- π₁ M' ⇒ M1.
-- : meaning (snd -$ M) M2
-     <- meaning M M'
-     <- π₂ M' ⇒ M2.
-- : meaning (pi A B) (Π A' B')
-     <- ({x} {x'} meaning x x' -> meaning (B x) (B' x'))
-     <- meaning A A'.
-- : meaning (lam E) (λ E')
-     <- ({x} {x'} meaning x x' -> meaning (E x) (E' x')).
-- : meaning (ap N -$ M) MN
-     <- meaning N N'
-     <- meaning M M'
-     <- M' $ N' ⇒ MN.
+meaning/unit : meaning unit 1.
+meaning/ax : meaning ax •.
+meaning/sg : meaning (sg A B) (Σ A' B')
+              <- ({x}{x'} x' ⇒ x' -> neutral x' -> meaning x x' -> meaning (B x) (B' x'))
+              <- meaning A A'.
+meaning/pair : meaning (pair M N) (M' , N')
+                <- meaning N N'
+                <- meaning M M'.
+meaning/fst : meaning (fst -$ M) M1
+               <- meaning M M'
+               <- π₁ M' ⇒ M1.
+meaning/snd : meaning (snd -$ M) M2
+               <- meaning M M'
+               <- π₂ M' ⇒ M2.
+meaning/pi : meaning (pi A B) (Π A' B')
+              <- ({x} {x'} x' ⇒ x' -> neutral x' -> meaning x x' -> meaning (B x) (B' x'))
+              <- meaning A A'.
+meaning/lam : meaning (lam E) (λ E')
+               <- ({x} {x'} x' ⇒ x' -> neutral x' -> meaning x x' -> meaning (E x) (E' x')).
+meaning/ap : meaning (ap N -$ M) MN
+              <- meaning N N'
+              <- meaning M M'
+              <- M' $ N' ⇒ MN.
 
 %worlds (meaning-var) (meaning _ _).
 %covers meaning +M -E.

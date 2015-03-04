@@ -3,26 +3,26 @@ quote : sem -> tm -> type.
 
 %block quote-var : block {x}{x'}{_ : quote x x'}.
 
-- : quote 1 unit.
-- : quote • ax.
-- : quote (Σ A B) (sg A' B')
-     <- ({x} {x'} quote x x' -> quote (B x) (B' x'))
-     <- quote A A'.
-- : quote (M , N) (pair M' N')
-     <- quote M M'
-     <- quote N N'.
-- : quote (π₁ M) (fst -$ M')
-     <- quote M M'.
-- : quote (π₂ M) (snd -$ M')
-     <- quote M M'.
-- : quote (Π A B) (pi A' B')
-     <- ({x} {x'} quote x x' -> quote (B x) (B' x'))
-     <- quote A A'.
-- : quote (λ E) (lam E')
-     <- ({x} {x'} quote x x' -> quote (E x) (E' x')).
-- : quote (M $ N) (ap N' -$ M')
-     <- quote N N'
-     <- quote M M'.
+quote/1 : quote 1 unit.
+quote/• : quote • ax.
+quote/Σ : quote (Σ A B) (sg A' B')
+           <- ({x} {x'} quote x x' -> quote (B x) (B' x'))
+           <- quote A A'.
+quote/, : quote (M , N) (pair M' N')
+           <- quote M M'
+           <- quote N N'.
+quote/π₁ : quote (π₁ M) (fst -$ M')
+            <- quote M M'.
+quote/π₂ : quote (π₂ M) (snd -$ M')
+            <- quote M M'.
+quote/Π : quote (Π A B) (pi A' B')
+           <- ({x} {x'} quote x x' -> quote (B x) (B' x'))
+           <- quote A A'.
+quote/λ : quote (λ E) (lam E')
+           <- ({x} {x'} quote x x' -> quote (E x) (E' x')).
+quote/$ : quote (M $ N) (ap N' -$ M')
+           <- quote N N'
+           <- quote M M'.
 
 %worlds (quote-var) (quote _ _).
 %total D (quote D _).

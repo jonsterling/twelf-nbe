@@ -4,38 +4,38 @@ reflect : sem -> sem -> sem -> type.
 reify : sem -> sem -> sem -> type.
 %mode reify +D1 +D2 -D3.
 
-- : reflect 1 K K.
-- : reflect (Σ A B) K (M , N)
-     <- reflect A (π₁ K) M
-     <- reflect (B M) (π₂ K) N.
-- : reflect (Π A B) K (λ E)
-     <- ({x} reify A x (N x))
-     <- ({x} reflect (B x) (K $ N x) (E x)).
+reflect/1 : reflect 1 K K.
+reflect/sg : reflect (Σ A B) K (M , N)
+              <- reflect A (π₁ K) M
+              <- reflect (B M) (π₂ K) N.
+reflect/pi : reflect (Π A B) K (λ E)
+              <- ({d} d ⇒ d -> neutral d -> reify A d (N d))
+              <- ({d} d ⇒ d -> neutral d -> reflect (B d) (K $ N d) (E d)).
 
-- : reify 1 D D.
-- : reify (Σ A B) D (M , N)
-     <- π₂ D ⇒ D2
-     <- π₁ D ⇒ D1
-     <- reify A D1 M
-     <- reify (B M) D2 N.
-- : reify (Π A B) D (λ E)
-     <- ({x} reflect A x (RA x))
-     <- ({x} D $ (RA x) ⇒ (DRA x))
-     <- ({x} (reify (B (RA x)) (DRA x) (E x))).
+reify/1 : reify 1 D D.
+reify/sg : reify (Σ A B) D (M , N)
+            <- π₂ D ⇒ D2
+            <- π₁ D ⇒ D1
+            <- reify A D1 M
+            <- reify (B M) D2 N.
+reify/pi : reify (Π A B) D (λ E)
+            <- ({e} e ⇒ e -> neutral e -> reflect A e (RA e))
+            <- ({e} e ⇒ e -> neutral e -> D $ RA e ⇒ DRA e)
+            <- ({e} e ⇒ e -> neutral e -> (reify (B (RA e)) (DRA e) (E e))).
 
-%worlds (var-sem) (reify _ _ _) (reflect _ _ _).
+%worlds (var-eval) (reify _ _ _) (reflect _ _ _).
 
 reify-ty : sem -> sem -> type.
 %mode reify-ty +D1 -D2.
 
-- : reify-ty 1 1.
-- : reify-ty (Π A B) (Π A' B')
-     <- ({x} reflect A x (RA x))
-     <- ({x} reify-ty (B (RA x)) (B' x))
-     <- reify-ty A A'.
-- : reify-ty (Σ A B) (Σ A' B')
-     <- ({x} reflect A x (RA x))
-     <- ({x} reify-ty (B (RA x)) (B' x))
-     <- reify-ty A A'.
+reify-ty/1 : reify-ty 1 1.
+reify-ty/pi : reify-ty (Π A B) (Π A' B')
+               <- ({x} x ⇒ x -> neutral x -> reflect A x (RA x))
+               <- ({x} x ⇒ x -> neutral x -> reify-ty (B (RA x)) (B' x))
+               <- reify-ty A A'.
+reify-ty/sg : reify-ty (Σ A B) (Σ A' B')
+               <- ({x} x ⇒ x -> neutral x -> reflect A x (RA x))
+               <- ({x} x ⇒ x -> neutral x -> reify-ty (B (RA x)) (B' x))
+               <- reify-ty A A'.
 
-%worlds (var-sem) (reify-ty _ _).
+%worlds (var-eval) (reify-ty _ _).
