@@ -4,7 +4,7 @@ reflect : sem -> sem -> sem -> type.
 reify : sem -> sem -> sem -> type.
 %mode reify +D1 +D2 -D3.
 
-reflect/1 : reflect 1 K K.
+reflect/1 : reflect 1 K •.
 reflect/sg : reflect (Σ A B) K (M , N)
               <- reflect A (π₁ K) M
               <- reflect (B M) (π₂ K) N.
@@ -12,7 +12,7 @@ reflect/pi : reflect (Π A B) K (λ E)
               <- ({d} d ⇒ d -> neutral d -> reify A d (N d))
               <- ({d} d ⇒ d -> neutral d -> reflect (B d) (K $ N d) (E d)).
 
-reify/1 : reify 1 D D.
+reify/1 : reify 1 D •.
 reify/sg : reify (Σ A B) D (M , N)
             <- π₂ D ⇒ D2
             <- π₁ D ⇒ D1
