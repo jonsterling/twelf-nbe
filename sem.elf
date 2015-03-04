@@ -17,10 +17,6 @@ $ : sem -> sem -> sem. %infix left 10 $.
 ⇒ : sem -> sem -> type. %infix right 9 ⇒.
 %mode ⇒ +M -N.
 
-canonicity : type.
-can : canonicity.
-neu : canonicity.
-
 neutral : sem -> type.
 %mode neutral +M.
 
